@@ -42,7 +42,7 @@ All interactions are **non-custodial**, trustless, and settled by programmatic r
 ### 1. Prerequisites
 
 - [Solana CLI](https://docs.solana.com/cli/install-solana-cli-tools)
-- [Anchor CLI](https://book.anchor-lang.com/getting_started/installation.html)
+- [Anchor CLI](https://www.anchor-lang.com/docs)
 - [Rust](https://www.rust-lang.org/tools/install)
 
 ### 2. Clone & Build
