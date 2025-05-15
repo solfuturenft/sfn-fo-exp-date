@@ -1,53 +1,85 @@
-# 📜 SOLFUTURENFT Smart Contracts
+📜 SOLFUTURENFT Smart Contracts
+This repository contains Anchor-based smart contracts powering SOLFUTURENFT — a decentralized protocol for trading NFT futures and options on the Solana blockchain.
 
-This directory contains the **Anchor-based smart contracts** powering **SOLFUTURENFT** — a decentralized protocol enabling **NFT futures and options** trading on the Solana blockchain.
+⚙️ Overview
+These smart contracts enable:
 
----
+Creation of futures contracts based on NFT prices
 
-## ⚙️ Overview
+Creation and exercise of call/put options tied to NFT floor prices
 
-These smart contracts allow two parties to:
+Secure deposit, locking, and release of SOL
 
-- Create **futures contracts** tied to NFT prices.
-- Create and exercise **call/put options** for NFTs.
-- Deposit, lock, and release SOL securely.
-- Use **floor price oracles** for fair settlement (coming soon).
+(Upcoming) Oracle integration for floor price validation
 
-All interactions are **non-custodial**, trustless, and settled by programmatic rules on-chain.
+All interactions are non-custodial, trustless, and enforced by programmatic rules directly on-chain.
 
----
+🔁 Contract Types
+🔹 NFT Futures Contract
+Initiator deposits 1 NFT and defines:
 
-## 🔁 Contract Types
+Expiry date
 
-### 🔹 NFT Futures Contract
-- **Initiator** deposits 1 NFT and defines:
-  - Expiry date
-  - Target price (in SOL/USDC)
-- **Counterparty** fulfills the contract by depositing the agreed amount.
-- At expiry:
-  - NFT goes to buyer if price condition is met
-  - Otherwise, NFT is returned and funds refunded
+Target price (in SOL or USDC)
 
-### 🔹 NFT Options Contract (WIP)
-- Create **call** or **put** options on NFT floor price.
-- Option writer locks NFT or funds
-- Option buyer pays premium
-- Option can be exercised before expiry
-- Oracle-based price feed used for validation
+Counterparty fulfills the contract by depositing the agreed amount
 
----
+Upon expiry:
 
-## 🛠 Getting Started (Development)
+If the NFT floor price ≥ target price → NFT is transferred to buyer
 
-### 1. Prerequisites
+Else → NFT is returned to seller and funds refunded
 
-- [Solana CLI](https://docs.solana.com/cli/install-solana-cli-tools)
-- [Anchor CLI](https://www.anchor-lang.com/docs)
-- [Rust](https://www.rust-lang.org/tools/install)
+🔹 NFT Options Contract (WIP)
+Supports Call and Put options based on floor price
 
-### 2. Clone & Build
+Writer locks NFT or funds
 
-```bash
+Buyer pays a premium
+
+Option can be exercised before expiry
+
+Uses an on-chain oracle (e.g., Tensor) to validate price at settlement
+
+🛠 Development Guide
+1. Prerequisites
+Ensure the following tools are installed:
+
+Solana CLI
+
+Anchor CLI
+
+Rust
+
+2. Build and Deploy
+bash
+Copy
+Edit
 git clone https://github.com/solfuturenft/sfn-fo-exp-date.git
 cd sfn-fo-exp-date/programs/solfuturenft
 anchor build
+anchor deploy
+Devnet Program ID: ERXrCZBaHPRgzTwHE71TJUh6zGCqPqQyRHL8xJgK59z4
+
+🧪 Testing the Contracts
+Contracts can be tested on Solana Devnet
+
+Use the Anchor IDL file: .nft_futures.json
+
+Compatible front-end: sfn-frontend
+
+Smart contracts use SPL Token + Anchor framework
+
+Price feeds are sourced from Tensor floor price API (coming)
+
+💬 Community & Support
+For support, ideas, or partnerships, join our Discord: https://discord.gg/vbywpQXQ
+
+Please open an issue for bugs or feature requests
+
+📌 Notes
+The protocol allows two parties to enter trustless agreements on NFT price speculation.
+
+Contracts support mutable terms, allowing for margin deposits and specific collection IDs.
+
+Oracle-based validation ensures fair and decentralized settlement.
