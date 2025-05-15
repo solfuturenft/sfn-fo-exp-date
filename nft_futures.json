@@ -1,0 +1,364 @@
+{
+  "address": "ERXrCZBaHPRgzTwHE71TJUh6zGCqPqQyRHL8xJgK59z4",
+  "metadata": {
+    "name": "nft_futures",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "create_future",
+      "discriminator": [
+        46,
+        137,
+        236,
+        156,
+        24,
+        133,
+        128,
+        58
+      ],
+      "accounts": [
+        {
+          "name": "future_account",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "nft_mint"
+        },
+        {
+          "name": "oracle"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "strike_price",
+          "type": "u64"
+        },
+        {
+          "name": "expiry",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "create_option",
+      "discriminator": [
+        226,
+        92,
+        124,
+        94,
+        113,
+        96,
+        60,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "option_account",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "writer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "nft_mint"
+        },
+        {
+          "name": "oracle"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "strike_price",
+          "type": "u64"
+        },
+        {
+          "name": "expiry",
+          "type": "i64"
+        },
+        {
+          "name": "premium",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "exercise_option",
+      "discriminator": [
+        231,
+        98,
+        131,
+        183,
+        245,
+        93,
+        122,
+        48
+      ],
+      "accounts": [
+        {
+          "name": "option_account",
+          "writable": true
+        },
+        {
+          "name": "option_escrow_nft_account",
+          "writable": true
+        },
+        {
+          "name": "holder_nft_account",
+          "writable": true
+        },
+        {
+          "name": "escrow_signer",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  112,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "oracle",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "oracle_price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "join_future",
+      "discriminator": [
+        168,
+        1,
+        190,
+        164,
+        190,
+        225,
+        154,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "future_account",
+          "writable": true
+        },
+        {
+          "name": "taker",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "settle_future",
+      "discriminator": [
+        255,
+        208,
+        112,
+        205,
+        180,
+        101,
+        202,
+        129
+      ],
+      "accounts": [
+        {
+          "name": "future_account",
+          "writable": true
+        },
+        {
+          "name": "escrow_nft_account",
+          "writable": true
+        },
+        {
+          "name": "taker_nft_account",
+          "writable": true
+        },
+        {
+          "name": "creator_nft_account",
+          "writable": true
+        },
+        {
+          "name": "escrow_signer",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  117,
+                  116,
+                  117,
+                  114,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "oracle",
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "oracle_price",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FutureContract",
+      "discriminator": [
+        99,
+        113,
+        101,
+        213,
+        10,
+        203,
+        43,
+        2
+      ]
+    },
+    {
+      "name": "OptionContract",
+      "discriminator": [
+        196,
+        220,
+        72,
+        61,
+        245,
+        42,
+        68,
+        234
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TooEarly",
+      "msg": "Settlement attempted too early."
+    },
+    {
+      "code": 6001,
+      "name": "TooLate",
+      "msg": "Option expired."
+    },
+    {
+      "code": 6002,
+      "name": "Unauthorized",
+      "msg": "Unauthorized oracle."
+    }
+  ],
+  "types": [
+    {
+      "name": "FutureContract",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "taker",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "strike_price",
+            "type": "u64"
+          },
+          {
+            "name": "expiry",
+            "type": "i64"
+          },
+          {
+            "name": "nft_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "oracle",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptionContract",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "writer",
+            "type": "pubkey"
+          },
+          {
+            "name": "strike_price",
+            "type": "u64"
+          },
+          {
+            "name": "expiry",
+            "type": "i64"
+          },
+          {
+            "name": "premium",
+            "type": "u64"
+          },
+          {
+            "name": "nft_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "oracle",
+            "type": "pubkey"
+          }
+        ]
+      }
+    }
+  ]
+}
