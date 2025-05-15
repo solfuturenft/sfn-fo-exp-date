@@ -10,7 +10,7 @@ These smart contracts allow two parties to:
 
 - Create **futures contracts** tied to NFT prices.
 - Create and exercise **call/put options** for NFTs.
-- Deposit, lock, and release **NFTs, SOL, or USDC** securely.
+- Deposit, lock, and release SOL securely.
 - Use **floor price oracles** for fair settlement (coming soon).
 
 All interactions are **non-custodial**, trustless, and settled by programmatic rules on-chain.
