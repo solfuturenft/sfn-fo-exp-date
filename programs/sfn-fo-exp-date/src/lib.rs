@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::token::{self, Mint, Token, TokenAccount, Transfer};
 
-declare_id!("id");
+declare_id!("ERXrCZBaHPRgzTwHE71TJUh6zGCqPqQyRHL8xJgK59z4");
 
 #[program]
 pub mod nft_futures {
@@ -96,6 +96,7 @@ pub struct CreateFuture<'info> {
     #[account(mut)]
     pub creator: Signer<'info>,
     pub nft_mint: Account<'info, Mint>,
+    /// CHECK: This account is only used to record the oracle public key; no data is read or written.
     pub oracle: AccountInfo<'info>,
     pub system_program: Program<'info, System>,
 }
@@ -118,6 +119,7 @@ pub struct SettleFuture<'info> {
     #[account(mut)]
     pub creator_nft_account: Account<'info, TokenAccount>,
     #[account(seeds = [b"future"], bump)]
+    /// CHECK: PDA signer for escrow; validated via `seeds` and `bump`
     pub escrow_signer: AccountInfo<'info>,
     pub oracle: Signer<'info>,
     pub token_program: Program<'info, Token>,
@@ -130,6 +132,7 @@ pub struct CreateOption<'info> {
     #[account(mut)]
     pub writer: Signer<'info>,
     pub nft_mint: Account<'info, Mint>,
+    /// CHECK: This account is only used to record the oracle public key; no data is read or written.
     pub oracle: AccountInfo<'info>,
     pub system_program: Program<'info, System>,
 }
@@ -143,6 +146,7 @@ pub struct ExerciseOption<'info> {
     #[account(mut)]
     pub holder_nft_account: Account<'info, TokenAccount>,
     #[account(seeds = [b"option"], bump)]
+    /// CHECK: PDA signer for escrow; validated via `seeds` and `bump`
     pub escrow_signer: AccountInfo<'info>,
     pub oracle: Signer<'info>,
     pub token_program: Program<'info, Token>,
